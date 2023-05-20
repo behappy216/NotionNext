@@ -16,9 +16,8 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
 
   if (!posts || posts.length === 0) {
     return <BlogPostListEmpty />
-  }
-
-  return (
+  } else {
+    return (
       <div className='w-full justify-center'>
         <div id='container'>
         {/* 文章列表 */}
@@ -28,7 +27,8 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount }) => {
         </div>
         <PaginationSimple page={page} totalPage={totalPage} />
       </div>
-  )
+    )
+  }
 }
 
 export default BlogPostListPage

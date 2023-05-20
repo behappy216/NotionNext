@@ -2,14 +2,14 @@ import { useGlobal } from '@/lib/global'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import CategoryGroup from './CategoryGroup'
+import Collapse from './Collapse'
 import Logo from './Logo'
 import SearchDrawer from './SearchDrawer'
 import TagGroups from './TagGroups'
-import { MenuListTop } from './MenuListTop'
+import MenuButtonGroupTop from './MenuButtonGroupTop'
+import MenuList from './MenuList'
 import { useRouter } from 'next/router'
 import throttle from 'lodash.throttle'
-import SideBar from './SideBar'
-import SideBarDrawer from './SideBarDrawer'
 
 let windowTop = 0
 
@@ -29,10 +29,6 @@ const TopNav = props => {
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)
-  }
-
-  const toggleSideBarClose = () => {
-    changeShow(false)
   }
 
   // 监听滚动
@@ -67,7 +63,7 @@ const TopNav = props => {
       nav && nav.classList.replace('transparent', 'dark:bg-hexo-black-gray')
     }
 
-    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
+    const showNav = scrollS <= windowTop || scrollS < 5 || (header && scrollS <= header.clientHeight * 2)// 非首页无大图时影藏顶部 滚动条置顶时隐藏
     if (!showNav) {
       nav && nav.classList.replace('top-0', '-top-20')
       windowTop = scrollS
@@ -133,7 +129,7 @@ const TopNav = props => {
         <SearchDrawer cRef={searchDrawer} slot={searchDrawerSlot} />
 
         {/* 导航栏 */}
-        <div id='sticky-nav' style={{ backdropFilter: 'blur(3px)' }} className={'top-0 duration-300 transition-all  shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent'}>
+        <div id='sticky-nav' className={'top-0  duration-200 transition-all  shadow-none fixed bg-none dark:bg-hexo-black-gray dark:text-gray-200 text-black w-full z-20 transform border-transparent dark:border-transparent'}>
             <div className='w-full flex justify-between items-center px-4 py-2'>
                 <div className='flex'>
                     <Logo {...props} />
@@ -141,18 +137,19 @@ const TopNav = props => {
 
                 {/* 右侧功能 */}
                 <div className='mr-1 justify-end items-center '>
-                    <div className='hidden lg:flex'> <MenuListTop {...props} /></div>
+                    <div className='hidden lg:flex'> <MenuButtonGroupTop {...props} /></div>
                     <div onClick={toggleMenuOpen} className='w-8 justify-center items-center h-8 cursor-pointer flex lg:hidden'>
                         {isOpen ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
                     </div>
                 </div>
             </div>
-        </div>
 
-        {/* 折叠侧边栏 */}
-        <SideBarDrawer isOpen={isOpen} onClose={toggleSideBarClose}>
-            <SideBar {...props} />
-        </SideBarDrawer>
+            <Collapse type='vertical' isOpen={isOpen} className='shadow-xl'>
+                <div className='bg-white dark:bg-hexo-black-gray pt-1 py-2 px-5 lg:hidden '>
+                    <MenuList {...props} />
+                </div>
+            </Collapse>
+        </div>
     </div>)
 }
 

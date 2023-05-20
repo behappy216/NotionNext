@@ -1,19 +1,10 @@
 /* eslint-disable */
-import { useEffect } from 'react'
-const id = 'canvas_sakura'
+import React from 'react'
+
 export const Sakura = () => {
-  const destroySakura = ()=>{
-    const sakura = document.getElementById(id)
-    if(sakura && sakura.parentNode){
-      sakura.parentNode.removeChild(sakura)
-    }
-  }
-      
-  useEffect(() => {
+  React.useEffect(() => {
     createSakura({})
-    return () => destroySakura()
   }, [])
-  return <></>
 }
 
 /**
@@ -138,7 +129,7 @@ function createSakura() {
       'style',
       'position: fixed;left: 0;top: 0;pointer-events: none;'
     )
-    canvas.setAttribute('id', id)
+    canvas.setAttribute('id', 'canvas_sakura')
     document.getElementsByTagName('body')[0].appendChild(canvas)
     cxt = canvas.getContext('2d')
     var sakuraList = new SakuraList()
@@ -174,12 +165,15 @@ function createSakura() {
       stop = requestAnimationFrame(asd)
     }
   }
+  window.onresize = function () {
+    var canvasSnow = document.getElementById('canvas_snow')
+  }
   img.onload = function () {
     startSakura()
   }
   function stopp() {
     if (staticx) {
-      var child = document.getElementById(id)
+      var child = document.getElementById('canvas_sakura')
       child.parentNode.removeChild(child)
       window.cancelAnimationFrame(stop)
       staticx = false

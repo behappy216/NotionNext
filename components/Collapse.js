@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle } from 'react'
+import React from 'react'
 
 /**
  * 折叠面板组件，支持水平折叠、垂直折叠
@@ -6,27 +6,12 @@ import React, { useEffect, useImperativeHandle } from 'react'
  * @returns
  */
 const Collapse = props => {
-  const { collapseRef } = props
-  const ref = React.useRef(null)
+  const collapseRef = React.useRef(null)
   const type = props.type || 'vertical'
-
-  useImperativeHandle(collapseRef, () => {
-    return {
-      /**
-       * 当子元素高度变化时，可调用此方法更新折叠组件的高度
-       * @param {*} param0
-       */
-      updateCollapseHeight: ({ height, increase }) => {
-        ref.current.style.height = ref.current.scrollHeight
-        ref.current.style.height = 'auto'
-      }
-    }
-  })
-
   /**
-     * 折叠
-     * @param {*} element
-     */
+   * 折叠
+   * @param {*} element
+   */
   const collapseSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth
@@ -49,9 +34,9 @@ const Collapse = props => {
   }
 
   /**
-     * 展开
-     * @param {*} element
-     */
+   * 展开
+   * @param {*} element
+   */
   const expandSection = element => {
     const sectionHeight = element.scrollHeight
     const sectionWidth = element.scrollWidth
@@ -73,20 +58,22 @@ const Collapse = props => {
     clearTimeout(clearTime)
   }
 
-  useEffect(() => {
+  const updateHeight = () => {
+    collapseRef.current.style.height = 'auto'
+  }
+
+  React.useEffect(() => {
     if (props.isOpen) {
-      expandSection(ref.current)
+      expandSection(collapseRef.current)
     } else {
-      collapseSection(ref.current)
+      collapseSection(collapseRef.current)
     }
-    // 通知父组件高度变化
-    props?.onHeightChange && props.onHeightChange({ height: ref.current.scrollHeight, increase: props.isOpen })
   }, [props.isOpen])
 
   return (
-        <div ref={ref} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className}>
-            {props.children}
-        </div>
+    <div ref={collapseRef} onClick={updateHeight} style={type === 'vertical' ? { height: '0px' } : { width: '0px' }} className={'overflow-hidden duration-200 ' + props.className }>
+      {props.children}
+    </div>
   )
 }
 Collapse.defaultProps = { isOpen: false }

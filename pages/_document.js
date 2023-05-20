@@ -11,14 +11,14 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang={BLOG.LANG}>
+      <Html lang={BLOG.LANG} className='test'>
         <Head>
           <link rel='icon' href='/favicon.ico' />
           <meta name="baidu-site-verification" content="codeva-1oxVmf2bfh" />
           <CommonScript />
         </Head>
 
-        <body className={`${BLOG.FONT_STYLE} font-light bg-day dark:bg-night`}>
+        <body className={`${BLOG.FONT_STYLE} tracking-wider bg-day dark:bg-night`}>
             <Main />
             <NextScript />
         </body>

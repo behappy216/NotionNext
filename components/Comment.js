@@ -43,12 +43,6 @@ const GiscusComponent = dynamic(
   },
   { ssr: false }
 )
-const WebMentionComponent = dynamic(
-  () => {
-    return import('@/components/WebMention')
-  },
-  { ssr: false }
-)
 
 const ValineComponent = dynamic(() => import('@/components/ValineComponent'), {
   ssr: false
@@ -105,10 +99,6 @@ const Comment = ({ frontMatter }) => {
 
         {BLOG.COMMENT_GITALK_CLIENT_ID && (<div key='GitTalk'>
           <GitalkComponent frontMatter={frontMatter}/>
-        </div>)}
-
-        {BLOG.COMMENT_WEBMENTION.ENABLE && (<div key='WebMention'>
-          <WebMentionComponent frontMatter={frontMatter} className="px-2" />
         </div>)}
       </Tabs>
     </div>

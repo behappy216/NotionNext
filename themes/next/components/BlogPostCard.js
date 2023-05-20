@@ -8,7 +8,6 @@ import TagItemMini from './TagItemMini'
 import CONFIG_NEXT from '../config_next'
 import NotionPage from '@/components/NotionPage'
 import NotionIcon from '@/components/NotionIcon'
-import TwikooCommentCount from '@/components/TwikooCommentCount'
 
 const BlogPostCard = ({ post, showSummary }) => {
   const { locale } = useGlobal()
@@ -32,7 +31,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           <div
             className={`flex mt-2 items-center ${showPreview ? 'justify-center' : 'justify-start'
-              } flex-wrap dark:text-gray-500 text-gray-400 `}
+              } flex-wrap dark:text-gray-500 text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 `}
           >
             <div>
               {post.category && (
@@ -40,7 +39,7 @@ const BlogPostCard = ({ post, showSummary }) => {
                   <Link
                     href={`/category/${post.category}`}
                     passHref
-                    className="hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer font-light text-sm hover:underline transform">
+                    className="cursor-pointer font-light text-sm hover:underline transform">
 
                     <i className="mr-1 fas fa-folder" />
                     {post.category}
@@ -49,18 +48,22 @@ const BlogPostCard = ({ post, showSummary }) => {
                   <span className="mx-2">|</span>
                 </>
               )}
-                <Link
-                    href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
-                    passHref
-                    className="hover:text-blue-500 dark:hover:text-blue-400 font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
-                    {post.date?.start_date}
-                </Link>
+              <Link
+                href={`/archive#${post?.date?.start_date?.substr(0, 7)}`}
+                passHref
+                className="font-light hover:underline cursor-pointer text-sm leading-4 mr-3">
+
+                {post.date?.start_date}
+
+              </Link>
             </div>
-            <TwikooCommentCount post={post} className='hover:text-blue-500 dark:hover:text-blue-400 hover:underline text-sm'/>
-            <div className="hover:text-blue-500 dark:hover:text-blue-400  md:flex-nowrap flex-wrap md:justify-start inline-block">
-                {post.tagItems?.map(tag => (
+            <div className="md:flex-nowrap flex-wrap md:justify-start inline-block">
+              <div>
+                {' '}
+                {post.tagItems.map(tag => (
                   <TagItemMini key={tag.name} tag={tag} />
                 ))}
+              </div>
             </div>
           </div>
 
@@ -72,7 +75,7 @@ const BlogPostCard = ({ post, showSummary }) => {
 
           {/* 搜索结果 */}
           {post.results && (
-            <p className="p-4-lines mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
+            <p className="mt-4 text-gray-700 dark:text-gray-300 text-sm font-light leading-7">
               {post.results.map(r => (
                 <span key={r}>{r}</span>
               ))}

@@ -1,3 +1,4 @@
+import BLOG from '@/blog.config'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
@@ -13,8 +14,6 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
-
   return (
     <div
         data-aos="fade-down"
@@ -26,8 +25,8 @@ const PaginationSimple = ({ page, showNext }) => {
         href={{
           pathname:
             currentPage - 1 === 1
-              ? `${pagePrefix}/`
-              : `${pagePrefix}/page/${currentPage - 1}`,
+              ? `${BLOG.SUB_PATH || '/'}`
+              : `/page/${currentPage - 1}`,
           query: router.query.s ? { s: router.query.s } : {}
         }}
         passHref

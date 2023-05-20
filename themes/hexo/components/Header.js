@@ -83,10 +83,19 @@ const Header = props => {
   }, throttleMs))
 
   return (
-        <header id="header" style={{ zIndex: 1 }} className="w-full h-screen relative" >
-
-            <div id='header-cover' style={{ backgroundImage: `url('${siteInfo.pageCover}')` }}
-                className={`header-cover bg-center w-full h-screen bg-cover ${CONFIG_HEXO.HOME_NAV_BACKGROUND_IMG_FIXED ? 'bg-fixed' : ''}`}/>
+        <header
+            id="header"
+            className="w-full h-screen bg-black text-white relative"
+        >
+            <div className={`w-full h-full ${CONFIG_HEXO.HOME_NAV_BACKGROUND_IMG_FIXED ? 'fixed' : ''}`}>
+                {/* <Image src={siteInfo.pageCover} fill
+                    style={{ objectFit: 'cover' }}
+                    className='opacity-70'
+                    placeholder='blur'
+                    blurDataURL='/bg_image.jpg' /> */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={siteInfo.pageCover} className='h-full w-full object-cover opacity-70 ' />
+            </div>
 
             <div className="absolute bottom-0 flex flex-col h-full items-center justify-center w-full ">
                 <div className='text-4xl md:text-5xl text-white shadow-text'>{siteInfo?.title}</div>

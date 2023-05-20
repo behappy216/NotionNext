@@ -1,19 +1,10 @@
 /* eslint-disable */
-import { useEffect } from 'react'
-const id = 'canvasNestCreated'
-export const Nest = () => {
-  const destroyNest = ()=>{
-      const nest = document.getElementById(id)
-      if(nest && nest.parentNode){
-        nest.parentNode.removeChild(nest)
-      }
-  }
+import React from 'react'
 
-  useEffect(() => {
+export const Nest = () => {
+  React.useEffect(() => {
     createNest()
-    return () => destroyNest()
   }, [])
-  return <></>
 }
 
 /**
@@ -74,7 +65,7 @@ function createNest() {
       m(o)
   }
   var i = document.createElement('canvas')
-  i.id = id
+  i.id = 'canvasNestCreated'
   var a = (function () {
       const t = e
       return {

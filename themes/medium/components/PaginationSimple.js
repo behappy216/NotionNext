@@ -48,7 +48,7 @@ const PaginationSimple = ({ page, totalPage }) => {
         {locale.PAGINATION.NEXT}→
       </Link>
     </div>
-  )
+  );
 }
 
 export default PaginationSimple
