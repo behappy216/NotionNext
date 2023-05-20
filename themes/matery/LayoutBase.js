@@ -10,6 +10,7 @@ import { useGlobal } from '@/lib/global'
 import BLOG from '@/blog.config'
 import FloatDarkModeButton from './components/FloatDarkModeButton'
 import throttle from 'lodash.throttle'
+import { isBrowser, loadExternalResource } from '@/lib/utils'
 
 /**
  * 基础布局 采用左右两侧布局，移动端使用顶部导航栏
@@ -36,6 +37,10 @@ const LayoutBase = props => {
     return () => document.removeEventListener('scroll', scrollListener)
   }, [])
 
+  if (isBrowser()) {
+    loadExternalResource('/css/theme-matery.css', 'css')
+  }
+
   return (
         <div id='theme-matery' className="min-h-screen flex flex-col justify-between bg-hexo-background-gray dark:bg-black w-full">
 
@@ -46,9 +51,15 @@ const LayoutBase = props => {
             {headerSlot}
 
             <main id="wrapper" className="flex-1 w-full py-8 md:px-8 lg:px-24 relative">
+                {/* 嵌入区域 */}
+                               <div id="container-slot" className={`w-full max-w-6xl ${props?.post && ' lg:max-w-3xl 2xl:max-w-4xl '} mt-6 px-3 mx-auto lg:flex lg:space-x-4 justify-center relative z-10`}>
+                   {props.containerSlot}
+                </div>
+
                 <div id="container-inner" className="w-full max-w-6xl mx-auto lg:flex lg:space-x-4 justify-center relative z-10">
                     {onLoading ? <LoadingCover /> : children}
                 </div>
+
             </main>
 
             {/* 左下角悬浮 */}
@@ -56,15 +67,12 @@ const LayoutBase = props => {
                 <Live2D />
             </div>
 
-            <div className="bottom-40 right-2 fixed justify-end z-20">
-                <FloatDarkModeButton />
-            </div>
-
             {/* 右下角悬浮 */}
-            <div className={ (show ? ' opacity-100 fixed ' : ' hidden opacity-0 ') + ' transition-all duration-200  bottom-12 right-2 justify-end z-20' }>
-                <div className= ' justify-center  flex flex-col items-center cursor-pointer '>
-                    <JumpToTopButton />
-                </div>
+            <div className="bottom-40 right-2 fixed justify-end space-y-2 z-20">
+                <FloatDarkModeButton />
+                <JumpToTopButton />
+                {/* 可扩展的右下角悬浮 */}
+                {props.floatRightBottom}
             </div>
 
             <Footer title={siteInfo?.title || BLOG.TITLE} />
