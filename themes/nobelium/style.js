@@ -6,8 +6,8 @@
  */
 const Style = () => {
   return <style jsx global>{`
-    .dark body {
-      background-color: red !important;
+    .dark html body {
+      background-color: #18181b !important;
     }
   `}</style>;
 };
