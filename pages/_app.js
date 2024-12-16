@@ -1,3 +1,4 @@
+// import '@/styles/animate.css' // @see https://animate.style/
 import '@/styles/globals.css'
 import '@/styles/utility-patterns.css'
 
@@ -9,7 +10,7 @@ import useAdjustStyle from '@/hooks/useAdjustStyle'
 import { GlobalContextProvider } from '@/lib/global'
 import { getBaseLayoutByTheme } from '@/themes/theme'
 import { useRouter } from 'next/router'
-import { useCallback, useMemo, useState, useEffect } from 'react'
+import { useCallback, useMemo } from 'react'
 import { getQueryParam } from '../lib/utils'
 
 // 各种扩展插件 这个要阻塞引入
@@ -31,14 +32,6 @@ const ClerkProvider = dynamic(() =>
 const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle()
-
-    const [backgroundColor, setBackgroundColor] = useState("white");
-    useEffect(()=>{
-          const darkMode = localStorage.getItem('darkMode') === 'true';
-           if(darkMode){
-             setBackgroundColor('var(--background-color)')
-           }
-    },[])
 
   const route = useRouter()
   const theme = useMemo(() => {
@@ -68,15 +61,15 @@ const MyApp = ({ Component, pageProps }) => {
       <ExternalPlugins {...pageProps} />
     </GlobalContextProvider>
   )
-    return (
-     <div style={{backgroundColor: backgroundColor}}>
+  return (
+    <>
       {enableClerk ? (
         <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
       ) : (
         content
       )}
-     </div>
-    )
+    </>
+  )
 }
 
 export default MyApp
