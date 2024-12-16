@@ -69,7 +69,6 @@ const LayoutBase = props => {
           <Transition
             show={!onLoading}
             appear={true}
-            initial={false}
             enter='transition ease-in-out duration-700 transform order-first'
             enterFrom='opacity-0 translate-y-16'
             enterTo='opacity-100'
