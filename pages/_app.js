@@ -33,6 +33,9 @@ const MyApp = ({ Component, pageProps }) => {
   // 一些可能出现 bug 的样式，可以统一放入该钩子进行调整
   useAdjustStyle()
 
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    const backgroundColor = darkMode ? "var(--background-color)" : "var(--background-color)" ;
+
   const route = useRouter()
   const theme = useMemo(() => {
     return (
@@ -61,15 +64,15 @@ const MyApp = ({ Component, pageProps }) => {
       <ExternalPlugins {...pageProps} />
     </GlobalContextProvider>
   )
-  return (
-    <>
+    return (
+     <div style={{backgroundColor: backgroundColor}}>
       {enableClerk ? (
         <ClerkProvider localization={zhCN}>{content}</ClerkProvider>
       ) : (
         content
       )}
-    </>
-  )
+     </div>
+    )
 }
 
 export default MyApp
